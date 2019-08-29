@@ -25,7 +25,7 @@ SECRET_KEY = 'b!+9=3f*2pq071(g3)c%76pit)f_bn3xts*=h6(8^p7j_r5iav'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['35.181.45.138', 'pefldays.ru']
+ALLOWED_HOSTS = ['35.181.45.138', 'pefldays.ru', '127.0.0.1']
 
 # Application definition
 
