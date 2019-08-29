@@ -17,17 +17,17 @@ def text_from_link(link):
 
 
 
-# def text_from_link3(link, count):
-#     """ Скачивает с сайта pefl.ru страницу по её адресу """
-#     headers = {
-#         'Cookie': "PHPSESSID=7bb86e5db64ca692b7dd9959ce52f862; rfl=amVmOl86MTc0ODpfOmQyYjBlYTUzZDRiMTc5NDM5ZWJmODAyNzg0ZWU5MjNl; last_visit=1553443497893::1553454297893",
-#         'cache-control': "no-cache",
-#         'Postman-Token': "0eeeb98b-a58a-4b41-87a8-a7ebe83d5e31"
-#     }
-#     page = requests.request("GET", link, headers=headers)
-#     page.encoding = 'windows-1251'
-#     print(page.text, file=open('file'+str(count)+'.htm', 'w'))
-#     return html.document_fromstring(page.text)
+def text_from_link3(link, count):
+    """ Скачивает с сайта pefl.ru страницу по её адресу """
+    headers = {
+        'Cookie': "PHPSESSID=7bb86e5db64ca692b7dd9959ce52f862; rfl=amVmOl86MTc0ODpfOmQyYjBlYTUzZDRiMTc5NDM5ZWJmODAyNzg0ZWU5MjNl; last_visit=1553443497893::1553454297893",
+        'cache-control': "no-cache",
+        'Postman-Token': "0eeeb98b-a58a-4b41-87a8-a7ebe83d5e31"
+    }
+    page = requests.request("GET", link, headers=headers)
+    page.encoding = 'windows-1251'
+    print(page.text, file=open('file'+str(count)+'.htm', 'w'))
+    return html.document_fromstring(page.text)
 
 
 def text_from_link2(link):

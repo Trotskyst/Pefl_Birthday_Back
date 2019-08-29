@@ -22,7 +22,7 @@ def download_chemp(request):
 
     # ссылка на Турниры
     url = pefl_url + find_link_by_link_text(doc, ' Турниры')
-    doc = text_from_link(url)
+    doc = text_from_link3(url, 1)
 
     elements = doc.xpath('//a[contains(@href, "plug.php?p=refl&t=t&")]')
 
@@ -57,7 +57,7 @@ def download_chemp(request):
 
         count += 1
         print(count, 'страна из', count_chemp)
-        doc = text_from_link(pefl_url + chemp_link)
+        doc = text_from_link3(pefl_url + chemp_link, count+1)
         number = 0
 
         # составлям список дивизионов
