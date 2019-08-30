@@ -28,20 +28,20 @@ def download_chemp(request):
     # ссылка на Турниры
     url = pefl_url + find_link_by_link_text(doc, ' Турниры')
     doc = text_from_link(url)
-    #
-    # elements = doc.xpath('//a[contains(@href, "plug.php?p=refl&t=t&")]')
-    #
-    # chemps = []
-    # divs = []
-    # commands = []
-    #
-    # # составлям список стран
-    # for links in elements:
-    #     link = links.get('href').replace('plug.php?p=refl&t=t&j=', '!')
-    #     text = links.text
-    #     chemps.append([text, link])
-    #
-    # chemps = sorted(set(map(tuple, chemps)), reverse=False)
+
+    elements = doc.xpath('//a[contains(@href, "plug.php?p=refl&t=t&")]')
+
+    chemps = []
+    divs = []
+    commands = []
+
+    # составлям список стран
+    for links in elements:
+        link = links.get('href').replace('plug.php?p=refl&t=t&j=', '!')
+        text = links.text
+        chemps.append([text, link])
+
+    chemps = sorted(set(map(tuple, chemps)), reverse=False)
     #
     # count_chemp = len(chemps)
 
