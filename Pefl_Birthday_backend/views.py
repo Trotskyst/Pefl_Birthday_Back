@@ -23,7 +23,7 @@ def download_chemp(request):
     pefl_url = 'http://pefl.ru/'
     # print('ssss')
     # logger.error(pefl_url)
-    # doc = text_from_link(pefl_url)
+    doc = text_from_link(pefl_url)
     #
     # # ссылка на Турниры
     # url = pefl_url + find_link_by_link_text(doc, ' Турниры')
