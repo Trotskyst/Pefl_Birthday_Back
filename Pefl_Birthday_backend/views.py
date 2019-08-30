@@ -18,10 +18,10 @@ def index_view(request):
 def download_chemp(request):
     pefl_url = 'http://pefl.ru/'
 
-    doc = text_from_link(pefl_url)
-
-    # ссылка на Турниры
-    url = pefl_url + find_link_by_link_text(doc, ' Турниры')
+    # doc = text_from_link(pefl_url)
+    #
+    # # ссылка на Турниры
+    # url = pefl_url + find_link_by_link_text(doc, ' Турниры')
     # doc = text_from_link3(url, 1)
     #
     # elements = doc.xpath('//a[contains(@href, "plug.php?p=refl&t=t&")]')
@@ -163,7 +163,7 @@ def download_chemp(request):
     # print('Всего команд:', count)
     data = {
         # 'text1': 'Всего стран =' + str(len(chemps)),
-        'text1': url,
+        'text1': pefl_url,
     }
     return render(request, 'download.html', data)
 
