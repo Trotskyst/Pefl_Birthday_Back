@@ -6,6 +6,10 @@ from lxml import etree
 from itertools import islice
 import lxml.html as html
 from lxml import etree
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def index_view(request):
@@ -17,7 +21,7 @@ def index_view(request):
 
 def download_chemp(request):
     pefl_url = 'http://pefl.ru/'
-
+    logger.error(pefl_url)
     # doc = text_from_link(pefl_url)
     #
     # # ссылка на Турниры
