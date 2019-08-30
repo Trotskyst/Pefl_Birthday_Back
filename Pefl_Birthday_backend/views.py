@@ -62,7 +62,7 @@ def download_chemp(request):
 
         count += 1
         # print(count, 'страна из', count_chemp)
-        doc = text_from_link(pefl_url + chemp_link)
+        # doc = text_from_link(pefl_url + chemp_link)
         number = 0
 
         # составлям список дивизионов
