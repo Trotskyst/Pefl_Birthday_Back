@@ -51,124 +51,124 @@ def download_chemp(request):
 
 
     print('Всего стран =', len(chemps))
-    print('Составлям список дивизионов')
-
-    count = 0
-    count_all = 0
-
-    for name, link in chemps:
-        chemp = name
-        chemp_link = link.replace('!', 'plug.php?p=refl&t=t&j=')
-
-        count += 1
-        print(count, 'страна из', count_chemp)
-        doc = text_from_link3(pefl_url + chemp_link, count+1)
-        number = 0
-
-        # составлям список дивизионов
-        elements = doc.xpath('//td/a[contains(@href, "plug.php?p=refl&t=v&")]')
-        for links in elements:
-            div_link = links.get('href').replace('plug.php?p=refl&t=v&j=', '!')
-            div = links.text
-            count_all += 1
-            number += 1
-
-            try:
-                chemp_id = Chemps.objects.get(name__iexact=chemp)
-            except Exception:
-                chemp_id = None
-
-            divs.append([chemp_id, div, div_link, number])
-
-        # break
-
-    # print(divs)
-
-    Divs.objects.all().delete()
-    Divs.objects.bulk_create(
-        Divs(chemp=chemp_id, name=name, link=link, sort=number) for chemp_id, name, link, number in divs)
-
-    print('Всего дивизионов =', count_all)
-    print('Составлям список команд')
-
-    count = 0
-    count_commands = 0
-
-    for chemp_id, name, link, number in divs:
-        div = name
-        div_link = link = link.replace('!', 'plug.php?p=refl&t=v&j=')
-        count += 1
-
-        try:
-            div_id = Divs.objects.get(name__iexact=div, chemp=chemp_id)
-        except Exception:
-            div_id = None
-
-        if count_commands // 5 == count_commands / 5:
-            print(count, 'дивизион из', count_all)
-
-        doc = text_from_link(pefl_url + div_link)
-
-        # ссылка на Таблицу
-        url = pefl_url + find_link_by_link_text(doc, 'Таблица')
-        doctxt = text_from_link2(url)
-
-        json_list = []
-        for s in doctxt.split('\n'):
-            if s.startswith('getjson'):
-                json_list = s.split('\'')
-                # print(json_list)
-                url = json_list[1]
-
-        json_text = text_from_json(pefl_url + 'json.php?' + url)
-        command_list = []
-        for text in json_text['data']:
-            # print(text[1]);
-            command_list.append(text[1].split('|'))
-        # print(command_list)
-
-        for command in command_list:
-            commands.append([div_id, command[0], '!' + command[1]])
-
-        # if count == 3:
-        #     break
-
-    # print(commands)
-
-    count_all = len(commands)
-
-    # очищаем список команд
-    Teams.objects.all().delete()
-
-    info_for_adding = []
-    count = 0
-
-    # print(commands)
-
-    for div_id, command, command_link in commands:
-        count += 1
-
-        info_for_adding.append([div_id, command, command_link])
-
-        if count // 100 == count / 100:
-            print(count, 'из', count_all)
-
-        if count // 100 == count / 100:
-            # Добавляем их
-            Teams.objects.bulk_create(
-                Teams(div=div_id, name=command, link=command_link) for
-                div_id, command, command_link in info_for_adding)
-            info_for_adding = []
-
-    # Добавляем оставшиеся
-    Teams.objects.bulk_create(
-        Teams(div=div_id, name=command, link=command_link) for
-        div_id, command, command_link in info_for_adding)
-
-    print('Всего команд:', count)
+    # print('Составлям список дивизионов')
+    #
+    # count = 0
+    # count_all = 0
+    #
+    # for name, link in chemps:
+    #     chemp = name
+    #     chemp_link = link.replace('!', 'plug.php?p=refl&t=t&j=')
+    #
+    #     count += 1
+    #     print(count, 'страна из', count_chemp)
+    #     doc = text_from_link3(pefl_url + chemp_link, count+1)
+    #     number = 0
+    #
+    #     # составлям список дивизионов
+    #     elements = doc.xpath('//td/a[contains(@href, "plug.php?p=refl&t=v&")]')
+    #     for links in elements:
+    #         div_link = links.get('href').replace('plug.php?p=refl&t=v&j=', '!')
+    #         div = links.text
+    #         count_all += 1
+    #         number += 1
+    #
+    #         try:
+    #             chemp_id = Chemps.objects.get(name__iexact=chemp)
+    #         except Exception:
+    #             chemp_id = None
+    #
+    #         divs.append([chemp_id, div, div_link, number])
+    #
+    #     # break
+    #
+    # # print(divs)
+    #
+    # Divs.objects.all().delete()
+    # Divs.objects.bulk_create(
+    #     Divs(chemp=chemp_id, name=name, link=link, sort=number) for chemp_id, name, link, number in divs)
+    #
+    # print('Всего дивизионов =', count_all)
+    # print('Составлям список команд')
+    #
+    # count = 0
+    # count_commands = 0
+    #
+    # for chemp_id, name, link, number in divs:
+    #     div = name
+    #     div_link = link = link.replace('!', 'plug.php?p=refl&t=v&j=')
+    #     count += 1
+    #
+    #     try:
+    #         div_id = Divs.objects.get(name__iexact=div, chemp=chemp_id)
+    #     except Exception:
+    #         div_id = None
+    #
+    #     if count_commands // 5 == count_commands / 5:
+    #         print(count, 'дивизион из', count_all)
+    #
+    #     doc = text_from_link(pefl_url + div_link)
+    #
+    #     # ссылка на Таблицу
+    #     url = pefl_url + find_link_by_link_text(doc, 'Таблица')
+    #     doctxt = text_from_link2(url)
+    #
+    #     json_list = []
+    #     for s in doctxt.split('\n'):
+    #         if s.startswith('getjson'):
+    #             json_list = s.split('\'')
+    #             # print(json_list)
+    #             url = json_list[1]
+    #
+    #     json_text = text_from_json(pefl_url + 'json.php?' + url)
+    #     command_list = []
+    #     for text in json_text['data']:
+    #         # print(text[1]);
+    #         command_list.append(text[1].split('|'))
+    #     # print(command_list)
+    #
+    #     for command in command_list:
+    #         commands.append([div_id, command[0], '!' + command[1]])
+    #
+    #     # if count == 3:
+    #     #     break
+    #
+    # # print(commands)
+    #
+    # count_all = len(commands)
+    #
+    # # очищаем список команд
+    # Teams.objects.all().delete()
+    #
+    # info_for_adding = []
+    # count = 0
+    #
+    # # print(commands)
+    #
+    # for div_id, command, command_link in commands:
+    #     count += 1
+    #
+    #     info_for_adding.append([div_id, command, command_link])
+    #
+    #     if count // 100 == count / 100:
+    #         print(count, 'из', count_all)
+    #
+    #     if count // 100 == count / 100:
+    #         # Добавляем их
+    #         Teams.objects.bulk_create(
+    #             Teams(div=div_id, name=command, link=command_link) for
+    #             div_id, command, command_link in info_for_adding)
+    #         info_for_adding = []
+    #
+    # # Добавляем оставшиеся
+    # Teams.objects.bulk_create(
+    #     Teams(div=div_id, name=command, link=command_link) for
+    #     div_id, command, command_link in info_for_adding)
+    #
+    # print('Всего команд:', count)
     data = {
-        # 'text1': 'Всего стран =' + str(len(chemps)),
-        'text1': pefl_url,
+        'text1': 'Всего стран =' + str(len(chemps)),
+        # 'text1': pefl_url,
     }
     return render(request, 'download.html', data)
 
