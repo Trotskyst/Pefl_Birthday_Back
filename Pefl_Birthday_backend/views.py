@@ -60,13 +60,13 @@ def download_chemp(request):
         chemp = name
         chemp_link = link.replace('!', 'plug.php?p=refl&t=t&j=')
 
-        # count += 1
-        # # print(count, 'страна из', count_chemp)
-        # doc = text_from_link(pefl_url + chemp_link)
-        # number = 0
-        #
-        # # составлям список дивизионов
-        # elements = doc.xpath('//td/a[contains(@href, "plug.php?p=refl&t=v&")]')
+        count += 1
+        # print(count, 'страна из', count_chemp)
+        doc = text_from_link(pefl_url + chemp_link)
+        number = 0
+
+        # составлям список дивизионов
+        elements = doc.xpath('//td/a[contains(@href, "plug.php?p=refl&t=v&")]')
         # for links in elements:
         #     div_link = links.get('href').replace('plug.php?p=refl&t=v&j=', '!')
         #     div = links.text
