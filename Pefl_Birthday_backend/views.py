@@ -22,31 +22,31 @@ def download_chemp(request):
 
     # ссылка на Турниры
     url = pefl_url + find_link_by_link_text(doc, ' Турниры')
-    doc = text_from_link3(url, 1)
-
-    elements = doc.xpath('//a[contains(@href, "plug.php?p=refl&t=t&")]')
-
-    chemps = []
-    divs = []
-    commands = []
-
-    # составлям список стран
-    for links in elements:
-        link = links.get('href').replace('plug.php?p=refl&t=t&j=', '!')
-        text = links.text
-        chemps.append([text, link])
-
-    chemps = sorted(set(map(tuple, chemps)), reverse=False)
-
-    count_chemp = len(chemps)
-
-    Chemps.objects.all().delete()
-    Chemps.objects.bulk_create(
-        Chemps(name=name, link=link) for name, link in chemps)
-
-
-    print('Всего стран =', len(chemps))
-    print('Составлям список дивизионов')
+    # doc = text_from_link3(url, 1)
+    #
+    # elements = doc.xpath('//a[contains(@href, "plug.php?p=refl&t=t&")]')
+    #
+    # chemps = []
+    # divs = []
+    # commands = []
+    #
+    # # составлям список стран
+    # for links in elements:
+    #     link = links.get('href').replace('plug.php?p=refl&t=t&j=', '!')
+    #     text = links.text
+    #     chemps.append([text, link])
+    #
+    # chemps = sorted(set(map(tuple, chemps)), reverse=False)
+    #
+    # count_chemp = len(chemps)
+    #
+    # Chemps.objects.all().delete()
+    # Chemps.objects.bulk_create(
+    #     Chemps(name=name, link=link) for name, link in chemps)
+    #
+    #
+    # print('Всего стран =', len(chemps))
+    # print('Составлям список дивизионов')
 
     # count = 0
     # count_all = 0
@@ -162,7 +162,8 @@ def download_chemp(request):
     #
     # print('Всего команд:', count)
     data = {
-        'text1': 'Всего стран =' + str(len(chemps)),
+        # 'text1': 'Всего стран =' + str(len(chemps)),
+        'text1': url,
     }
     return render(request, 'download.html', data)
 
