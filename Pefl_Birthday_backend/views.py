@@ -45,12 +45,12 @@ def download_chemp(request):
 
     count_chemp = len(chemps)
 
-    Chemps.objects.all().delete()
-    Chemps.objects.bulk_create(
-        Chemps(name=name, link=link) for name, link in chemps)
-
-
-    print('Всего стран =', len(chemps))
+    # Chemps.objects.all().delete()
+    # Chemps.objects.bulk_create(
+    #     Chemps(name=name, link=link) for name, link in chemps)
+    #
+    #
+    # print('Всего стран =', len(chemps))
     # print('Составлям список дивизионов')
     #
     # count = 0
