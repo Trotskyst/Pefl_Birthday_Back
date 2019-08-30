@@ -50,8 +50,8 @@ def download_chemp(request):
         Chemps(name=name, link=link) for name, link in chemps)
 
 
-    print('Всего стран =', len(chemps))
-    print('Составлям список дивизионов')
+    # print('Всего стран =', len(chemps))
+    # print('Составлям список дивизионов')
 
     count = 0
     count_all = 0
