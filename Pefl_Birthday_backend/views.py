@@ -56,37 +56,37 @@ def download_chemp(request):
     count = 0
     count_all = 0
 
-    # for name, link in chemps:
-    #     chemp = name
-    #     chemp_link = link.replace('!', 'plug.php?p=refl&t=t&j=')
+    for name, link in chemps:
+        chemp = name
+        chemp_link = link.replace('!', 'plug.php?p=refl&t=t&j=')
+
+        count += 1
+        # print(count, 'страна из', count_chemp)
+        doc = text_from_link3(pefl_url + chemp_link, count+1)
+        number = 0
+
+        # составлям список дивизионов
+        elements = doc.xpath('//td/a[contains(@href, "plug.php?p=refl&t=v&")]')
+        for links in elements:
+            div_link = links.get('href').replace('plug.php?p=refl&t=v&j=', '!')
+            div = links.text
+            count_all += 1
+            number += 1
+
+            try:
+                chemp_id = Chemps.objects.get(name__iexact=chemp)
+            except Exception:
+                chemp_id = None
+
+            divs.append([chemp_id, div, div_link, number])
+
+        # break
+
+    # print(divs)
     #
-    #     count += 1
-    #     print(count, 'страна из', count_chemp)
-    #     doc = text_from_link3(pefl_url + chemp_link, count+1)
-    #     number = 0
-    #
-    #     # составлям список дивизионов
-    #     elements = doc.xpath('//td/a[contains(@href, "plug.php?p=refl&t=v&")]')
-    #     for links in elements:
-    #         div_link = links.get('href').replace('plug.php?p=refl&t=v&j=', '!')
-    #         div = links.text
-    #         count_all += 1
-    #         number += 1
-    #
-    #         try:
-    #             chemp_id = Chemps.objects.get(name__iexact=chemp)
-    #         except Exception:
-    #             chemp_id = None
-    #
-    #         divs.append([chemp_id, div, div_link, number])
-    #
-    #     # break
-    #
-    # # print(divs)
-    #
-    # Divs.objects.all().delete()
-    # Divs.objects.bulk_create(
-    #     Divs(chemp=chemp_id, name=name, link=link, sort=number) for chemp_id, name, link, number in divs)
+    Divs.objects.all().delete()
+    Divs.objects.bulk_create(
+        Divs(chemp=chemp_id, name=name, link=link, sort=number) for chemp_id, name, link, number in divs)
     #
     # print('Всего дивизионов =', count_all)
     # print('Составлям список команд')
