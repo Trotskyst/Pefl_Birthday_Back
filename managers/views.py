@@ -31,7 +31,7 @@ class ManagersListDayView(generics.ListAPIView):
     def get_queryset(self):
         month = self.kwargs['month']
         day = self.kwargs['day']
-        queryset = Manager.objects.filter(birthday__month=month, birthday__day=day).order_by(Lower('managers__nickname'))
+        queryset = Manager.objects.filter(birthday__month=month, birthday__day=day).order_by(Lower('manager__nickname'))
         return queryset
 
 
