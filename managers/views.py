@@ -88,7 +88,7 @@ class ManagersWomanView(generics.ListAPIView):
     serializer_class = ManagersListSerializer
 
     def get_queryset(self):
-        queryset = Manager.objects.filter(gender__name__iexact='Женский').exclude(birthday__isnull=True).order_by(
+        queryset = Manager.objects.filter(gender__name__iexact='женский').exclude(birthday__isnull=True).order_by(
                 Lower('manager__nickname'))
         return queryset
 
