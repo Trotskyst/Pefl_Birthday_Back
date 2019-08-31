@@ -3,11 +3,14 @@ from rest_framework import generics
 from managers.serializers import *
 from managers.models import *
 from django.db.models.functions import Extract
+from django.db.models.functions import Lower
+
 
 class ManagersListAllView(generics.ListAPIView):
     """Список всех менеджеров"""
     serializer_class = ManagersListSerializer
-    queryset = Manager.objects.all()
+    queryset = Manager.objects.all().order_by(
+                Lower('manager__nickname'))
 
 
 class ManagersListMonthView(generics.ListAPIView):
@@ -16,7 +19,8 @@ class ManagersListMonthView(generics.ListAPIView):
 
     def get_queryset(self):
         month = self.kwargs['month']
-        queryset = Manager.objects.filter(birthday__month=month)
+        queryset = Manager.objects.filter(birthday__month=month).order_by(
+                Lower('manager__nickname'))
         return queryset
 
 
@@ -27,7 +31,7 @@ class ManagersListDayView(generics.ListAPIView):
     def get_queryset(self):
         month = self.kwargs['month']
         day = self.kwargs['day']
-        queryset = Manager.objects.filter(birthday__month=month, birthday__day=day)
+        queryset = Manager.objects.filter(birthday__month=month, birthday__day=day).order_by(Lower('managers__nickname'))
         return queryset
 
 
@@ -40,7 +44,7 @@ class ManagersListLetterView(generics.ListAPIView):
         if len(letter) == 1:
             queryset = Manager.objects.filter(manager__nickname__istartswith=letter).exclude(
                 birthday__isnull=True).order_by(
-                'manager__nickname')
+                Lower('manager__nickname'))
         else:
             queryset = Manager.objects.all().exclude(birthday__isnull=True).exclude(
                 manager__nickname__istartswith='q').exclude(manager__nickname__istartswith='s').exclude(
@@ -56,7 +60,7 @@ class ManagersListLetterView(generics.ListAPIView):
                 manager__nickname__istartswith='c').exclude(manager__nickname__istartswith='v').exclude(
                 manager__nickname__istartswith='b').exclude(manager__nickname__istartswith='n').exclude(
                 manager__nickname__istartswith='m').exclude(manager__nickname__istartswith='a').order_by(
-                'manager__nickname')
+                Lower('manager__nickname'))
         return queryset
 
 
@@ -75,7 +79,7 @@ class ManagersCountryView(generics.ListAPIView):
         queryset = Manager.objects.filter(team__div__chemp__name__iexact=country).exclude(
             birthday__isnull=True).annotate(b_month=Extract('birthday', 'month')).annotate(
             b_day=Extract('birthday', 'day')).order_by(
-            'b_month', 'b_day', 'team__div__sort', 'manager__nickname')
+            'b_month', 'b_day', 'team__div__sort', Lower('manager__nickname'))
         return queryset
 
 
@@ -84,7 +88,8 @@ class ManagersWomanView(generics.ListAPIView):
     serializer_class = ManagersListSerializer
 
     def get_queryset(self):
-        queryset = Manager.objects.filter(gender__name__iexact='Женский').exclude(birthday__isnull=True)
+        queryset = Manager.objects.filter(gender__name__iexact='Женский').exclude(birthday__isnull=True).order_by(
+                Lower('manager__nickname'))
         return queryset
 
 
